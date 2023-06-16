@@ -5,7 +5,7 @@
 library(TwoSampleMR)
 library(dplyr)
 library(ieugwasr)
-setwd("/share2/pub/zhenggw/zhenggw/GM_GWAS_LD_clumped_snps/")
+setwd("/share2/pub/GM_GWAS_LD_clumped_snps/")
 
 for(dir in c("/share2/pub/lijj/lijj/TheDutchMicrobiomeProject/gwas_taxa_genus_01022021_v1/",
               "/share2/pub/lijj/lijj/TheDutchMicrobiomeProject/gwas_taxa_family_01022021_v1/",
@@ -35,12 +35,12 @@ for(dir in c("/share2/pub/lijj/lijj/TheDutchMicrobiomeProject/gwas_taxa_genus_01
     # remove genus's LD
     b <- ld_clump(
     dplyr::tibble(rsid=expo_dat$SNP, pval=expo_dat$pval.exposure, id=expo_dat$id.exposure),
-    plink_bin = "/share2/pub/zhenggw/zhenggw/GM_GWAS_LD_clumped_snps/plink",
-    bfile = "/share2/pub/zhenggw/zhenggw/GM_GWAS_LD_clumped_snps/EUR_ref/EUR",
+    plink_bin = "/share2/pub/GM_GWAS_LD_clumped_snps/plink",
+    bfile = "/share2/pub/GM_GWAS_LD_clumped_snps/EUR_ref/EUR",
     clump_kb = 1000,clump_r2 = 0.1
     )
     expo_dat <- expo_dat[which(expo_dat$SNP %in% b$rsid),]
-    LD_clumped <- paste0("/share2/pub/zhenggw/zhenggw/GM_GWAS_LD_clumped_snps/",expo_name,"_1kr0.1.txt")
+    LD_clumped <- paste0("/share2/pub/GM_GWAS_LD_clumped_snps/",expo_name,"_1kr0.1.txt")
     write.table(expo_dat,file=LD_clumped)
     }
 }
