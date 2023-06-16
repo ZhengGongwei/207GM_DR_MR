@@ -38,11 +38,6 @@ do
 done
 
 cd /share2/pub/zhenggw/zhenggw/MVMR/Risk_data
-# ieu-b-38 SBP ieu-b-110 LDL FG FG ieu-b-39 DBP 2hGlu 2hGlu HbA1c HbA1c IL16 IL16
-
-# ieu-b-38 ieu-b-39 ieu-b-110
-# zless ieu-b-38.vcf.gz | grep -v "^##" | cut -f 1-5,10 | sed 's/:/\t/g' | cut -f 3-10 | awk 'NR!=1{$6=10^(-$6)}{print} ' | head
-# zless ieu-b-38.vcf.gz | grep -v "^##" | cut -f 1-5,10 | sed 's/:/\t/g' | cut -f 3-10 | awk 'BEGIN {OFS="\t"} NR==1 {print "SNP\tbeta\tse\teaf\teffect_allele\tother_allele\tpval\tsamplesize"} NR!=1 {$6=10^(-$6); print}' | head
 for file in ieu-b-38.vcf.gz ieu-b-39.vcf.gz ieu-b-110.vcf.gz; do
     output_file="${file%%.*}.txt"
     zless "$file" | grep -v "^##" | grep -v "^X" | cut -f 1-5,10 | sed 's/:/\t/g' | awk '{print $3,$6,$7,$9,$5,$4,$8,$10}' | awk 'BEGIN {OFS="\t"} NR==1 {print "SNP\tbeta\tse\teaf\teffect_allele\tother_allele\tpval\tsamplesize"} NR!=1 {$7=10^(-$7); print}' > "$output_file"
@@ -65,7 +60,6 @@ do
     sed -i '1s/$/\tPhenotype/' $file    # 在第一行末尾添加列名
     sed -i "2,\$s/$/\t${file%.*}/" $file    # 在第二行到最后一行末尾添加对应文件的名称
 done 
-
 ```
 
 # /share2/pub/zhenggw/zhenggw/MVMR
